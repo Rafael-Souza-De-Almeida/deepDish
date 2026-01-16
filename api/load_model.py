@@ -3,7 +3,7 @@ from model import create_model
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
-trained_model = torch.load("models/sps_classifier.pt", map_location=DEVICE)
+trained_model = torch.load("../models/sps_classifier.pt", map_location=DEVICE, weights_only=True)
 
 class_names = trained_model["class_names"]
 
