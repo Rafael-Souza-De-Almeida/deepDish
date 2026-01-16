@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torchvision import models
 
-def create_model(num_classes: int):
+def create_model(num_classes: int, device="cpu"):
 
     weights = models.EfficientNet_B0_Weights.DEFAULT
     model = models.efficientnet_b0(weights=weights)
@@ -16,3 +16,5 @@ def create_model(num_classes: int):
         nn.Dropout(p=0.2),
         nn.Linear(in_features=in_features, out_features=num_classes)
     )
+
+    return model.to(device)
