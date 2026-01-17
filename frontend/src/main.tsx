@@ -9,7 +9,7 @@ import NavBar from "./components/navbar";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
-      <div className="p-8">
+      <div className="">
         <NavBar />
         <App />
       </div>
