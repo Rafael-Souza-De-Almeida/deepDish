@@ -1,6 +1,5 @@
 import { Upload } from "lucide-react";
 import { useState } from "react";
-import { Button } from "./ui/button";
 
 interface InputFileProps {
   handleSetFile: (file: File) => void;
@@ -21,7 +20,7 @@ export default function InputFile({ handleSetFile }: InputFileProps) {
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      <div className="relative py-28 flex flex-col items-center justify-center w-full border-2 border-primary rounded-2xl cursor-pointer hover:bg-primary/10 transition-all">
+      <div className="relative py-8 flex flex-col items-center justify-center w-full border-2 border-primary rounded-2xl cursor-pointer hover:bg-primary/10 transition-all">
         {preview ? (
           <div>
             <img

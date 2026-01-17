@@ -5,10 +5,23 @@ import torch
 
 from load_model import model, class_names
 from utils.utils import process_image
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 CONFIDENCE_THRESHOLD = 0.5
+
+origins = [
+    "http://localhost:5173"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins, 
+    allow_credentials=True,  
+    allow_methods=["*"],  
+    allow_headers=["*"],  
+)
 
 @app.post("/predict")
 async def predict(file:UploadFile = File(...)):

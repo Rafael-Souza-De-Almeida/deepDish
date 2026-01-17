@@ -8,8 +8,8 @@ import { Progress } from "@radix-ui/react-progress";
 export default function App() {
   const [file, setFile] = React.useState<File | null>(null);
   const [prediction, setPrediction] = React.useState<{
-    class: string;
-    conf: number;
+    predicted_class: string;
+    confidence: number;
   } | null>(null);
   const [loading, setLoading] = React.useState(false);
 
@@ -44,7 +44,7 @@ export default function App() {
         <InputFile handleSetFile={setFile} />
         <Button
           onClick={() => handlePredict()}
-          className="w-full max-w-5xl h-15 text-lg font-montserrat transition-all active:scale-95"
+          className="w-full max-w-5xl h-15 text-lg transition-all active:scale-95"
         >
           {loading ? (
             <>
@@ -57,7 +57,7 @@ export default function App() {
         </Button>
 
         {prediction && (
-          <Card className="w-full max-w-5xl mt-8 border-2 border-green-100 bg-green-50/30 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <Card className="w-full max-w-5xl mt-8 border-2 border-green-100 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-green-600 uppercase tracking-wider font-inter">
                 Analysis Result
@@ -65,17 +65,17 @@ export default function App() {
             </CardHeader>
             <CardContent className="flex flex-col items-center gap-4">
               <div className="text-center">
-                <h2 className="text-4xl font-bold text-slate-900 font-montserrat uppercase">
-                  {prediction.class}
+                <h2 className="text-4xl font-bold uppercase">
+                  {prediction.predicted_class}
                 </h2>
-                <p className="text-sm text-slate-500 font-inter mt-1">
-                  Confidence Level: {(prediction.conf * 100).toFixed(1)}%
+                <p className="text-sm font-inter mt-1">
+                  Confidence Level: {(prediction.confidence * 100).toFixed(1)}%
                 </p>
               </div>
 
               <div className="w-full max-w-md mt-2">
                 <Progress
-                  value={prediction.conf * 100}
+                  value={prediction.confidence * 100}
                   className="h-2 bg-green-200"
                 />
               </div>
