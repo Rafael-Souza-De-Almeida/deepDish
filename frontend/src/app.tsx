@@ -1,10 +1,9 @@
-import { Button } from "./components/ui/button";
-
 export default function App() {
   return (
-    <div>
-      <h1 className="text-3xl">Hello, Deep Dish!</h1>
-      <Button>Click Me</Button>
+    <div className="flex flex-col items-center justify-center pt-24 gap-4 border-primary ">
+      <h1 className="text-5xl font-quicksand font-bold">
+        Is it sushi, pizza, or steak? Upload to find out!
+      </h1>
     </div>
   );
 }
