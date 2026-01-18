@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image
 import io
 import torch
@@ -29,6 +29,10 @@ async def predict(file:UploadFile = File(...)):
     image_bytes = await file.read()
     image = Image.open(io.BytesIO(image_bytes))
 
+   
+    if image.format not in ["JPEG", "JPG", "PNG"]:
+        raise HTTPException(status_code=400, detail="Invalid image format. Please upload a JPEG or PNG image.")
+    
     tensor = process_image(image)
 
     with torch.inference_mode():

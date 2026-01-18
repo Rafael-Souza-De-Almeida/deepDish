@@ -18,15 +18,25 @@ export default function App() {
     confidence: number;
   } | null>(null);
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
 
   async function handlePredict() {
     if (!file) return;
 
     setLoading(true);
     setPrediction(null);
+    setError(null);
 
     const formData = new FormData();
     formData.append("file", file);
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+
+    if (file && !allowedTypes.includes(file.type)) {
+      setError("Invalid file type. Please upload a JPG or PNG image.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:8000/predict", {
@@ -34,9 +44,14 @@ export default function App() {
         body: formData,
       });
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Something went wrong!");
+      }
+
       setPrediction(data);
-    } catch {
-      alert("Error during prediction. Please try again.");
+    } catch (error: any) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -83,6 +98,19 @@ export default function App() {
             )}
           </Button>
 
+          {error && (
+            <div className="mt-4 animate-in fade-in duration-300">
+              <Card className="border-2 border-primary">
+                <CardContent className="py-4 text-center">
+                  <p className="text-red-700 font-medium"> {error}</p>
+                  <p className="text-xs text-red-500 mt-1">
+                    Accepted formats: JPG, JPEG, PNG
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
           {prediction && (
             <div className="mt-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <Card className="border-2 border-green-200">
@@ -91,7 +119,7 @@ export default function App() {
                     {prediction.predicted_class}
                   </h2>
 
-                  <p className="text-sm text-slate-600">
+                  <p className="text-sm">
                     Confidence:{" "}
                     <span className="font-semibold">
                       {(prediction.confidence * 100).toFixed(1)}%
