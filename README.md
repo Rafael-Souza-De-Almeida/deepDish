@@ -78,7 +78,7 @@ DeepDish is fully containerized, making it easy to run on any environment with *
 
 ```bash
 # Clone the repository
-git clone https://github.com/Rafael-Souza-De-Almeida/deepdish.git
+git clone https://github.com/Rafael-Souza-De-Almeida/deepDish.git
 
 # Navigate to the project directory
 cd deepdish
